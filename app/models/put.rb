@@ -1,0 +1,2 @@
+class Put < ApplicationRecord
+end

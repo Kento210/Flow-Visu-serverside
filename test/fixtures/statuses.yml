@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  boothId: MyString
+  status: MyString
+  tagId: MyString
+  startTime: 1
+  operator: MyString
+
+two:
+  boothId: MyString
+  status: MyString
+  tagId: MyString
+  startTime: 1
+  operator: MyString

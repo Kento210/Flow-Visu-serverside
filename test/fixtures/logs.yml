@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  time: 1
+  tagId: MyString
+  stepNo: 1
+  boothId: MyString
+  operator: MyString
+  content: MyString
+
+two:
+  time: 1
+  tagId: MyString
+  stepNo: 1
+  boothId: MyString
+  operator: MyString
+  content: MyString

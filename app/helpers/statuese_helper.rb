@@ -1,0 +1,2 @@
+module StatueseHelper
+end
