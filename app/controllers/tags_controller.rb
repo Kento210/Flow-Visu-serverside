@@ -5,7 +5,13 @@ class TagsController < ApplicationController
     @tag = Tag.new(tag_params)
 
     if @tag.save
-      render json: { message: 'OK' }, status: :ok
+      # タグが正常に保存された後、その情報をStatusモデルにも保存します。
+      @status = Status.new(tag_params)
+      if @status.save
+        render json: { message: 'OK', status: @status }, status: :ok
+      else
+        render json: { error: 'Failed to create status' }, status: :unprocessable_entity
+      end
     else
       render json: { error: 'Failed to create tag' }, status: :unprocessable_entity
     end
