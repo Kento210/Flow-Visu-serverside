@@ -2,26 +2,24 @@ class TagsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    @tag = Tag.new(tag_params)
+    tags_params = params["_json"] || [params.require(:tag).permit(:tagId, :stepNo, :boothId, :operator, :content)]
 
-    if @tag.save
-      # タグが正常に保存された後、その情報をStatusモデルにも保存します。
-      @status = Status.new(tag_params)
-      if @status.save
-        render json: { message: 'OK', status: @status }, status: :ok
+    tags_params.each do |tag_param|
+      @tag = Tag.new(tag_param.permit(:tagId, :stepNo, :boothId, :operator, :content))
+
+      if @tag.save
+        # タグが正常に保存された後、その情報をStatusモデルにも保存します。
+        @status = Status.new(tag_param.permit(:tagId, :stepNo, :boothId, :operator, :content))
+        unless @status.save
+          render json: { error: 'Failed to create status' }, status: :unprocessable_entity
+          return
+        end
       else
-        render json: { error: 'Failed to create status' }, status: :unprocessable_entity
+        render json: { error: 'Failed to create tag' }, status: :unprocessable_entity
+        return
       end
-    else
-      render json: { error: 'Failed to create tag' }, status: :unprocessable_entity
     end
-  end
 
-  private
-
-  def tag_params
-    params.require(:tag).permit(:tagId, :stepNo, :boothId, :operator, :content)
+    render json: { message: 'OK' }, status: :ok
   end
 end
-
-  
