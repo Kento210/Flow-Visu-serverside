@@ -15,7 +15,11 @@ class TagsController < ApplicationController
           return
         end
       else
-        render json: { error: 'Failed to create tag' }, status: :unprocessable_entity
+        if @tag.errors.details[:tagId].any? { |detail| detail[:error] == :taken }
+          render json: { error: 'TagId already exists' }, status: :bad_request
+        else
+          render json: { error: 'Failed to create tag' }, status: :unprocessable_entity
+        end
         return
       end
     end
@@ -23,4 +27,3 @@ class TagsController < ApplicationController
     render json: { message: 'OK' }, status: :ok
   end
 end
-
