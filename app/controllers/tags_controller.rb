@@ -16,7 +16,7 @@ class TagsController < ApplicationController
         end
       else
         if @tag.errors.details[:tagId].any? { |detail| detail[:error] == :taken }
-          render json: { error: 'TagId already exists' }, status: :bad_request
+          render json: { error: 'TagId and stepNo combination already exists Error:400' }, status: :bad_request
         else
           render json: { error: 'Failed to create tag' }, status: :unprocessable_entity
         end
@@ -24,6 +24,7 @@ class TagsController < ApplicationController
       end
     end
 
-    render json: { message: 'OK' }, status: :ok
+    render json: { message: 'OK', created_at: @tag.created_at }, status: :ok
   end
 end
+

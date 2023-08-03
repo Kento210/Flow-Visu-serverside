@@ -1,3 +1,3 @@
 class Tag < ApplicationRecord
-    validates :tagId, uniqueness: true
+    validates :tagId, uniqueness: { scope: :stepNo, message: "errer:400" }
 end
