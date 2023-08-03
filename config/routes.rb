@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/ping', to: 'ping#index'
   post '/tag', to: 'tags#create'
   get '/status', to: 'statuses#index'
   get '/logs', to: 'logs#index'
