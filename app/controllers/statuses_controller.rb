@@ -2,7 +2,7 @@ class StatusesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @statuses = Status.select('DISTINCT ON ("boothId") *')
+    @statuses = Status.all
     render json: { data: @statuses }, status: :ok
   end
 end
