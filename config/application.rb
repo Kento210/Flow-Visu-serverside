@@ -20,13 +20,20 @@ module Myapp
     # config.eager_load_paths << Rails.root.join("extras")
 
     # CORSポリシーブロックの回避
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins 'flow-visu.suwageeks.org', 'localhost:3000'
-        # replace the origins with the origins you want to allow
-        resource '*',
-          headers: :any,
-          methods: [:get, :post, :delete, :put, :patch, :options, :head],
-          credentials: true
+    module Myapp
+      class Application < Rails::Application
+        config.load_defaults 7.0
+    
+        config.middleware.insert_before 0, Rack::Cors do
+          allow do
+            origins 'localhost:3000', 'flow-visu.suwageeks.org'
+            resource '*',
+              headers: :any,
+              methods: [:get, :post, :put, :patch, :delete, :options, :head],
+              credentials: true
+          end
+        end
+      end
+    end       
   end
 end
