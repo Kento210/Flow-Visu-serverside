@@ -18,5 +18,15 @@ module Myapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # CORSポリシーブロックの回避
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'flow-visu.suwageeks.org', 'localhost:3000'
+        # replace the origins with the origins you want to allow
+        resource '*',
+          headers: :any,
+          methods: [:get, :post, :delete, :put, :patch, :options, :head],
+          credentials: true
   end
 end
