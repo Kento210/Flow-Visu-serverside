@@ -5,5 +5,13 @@ class StatusesController < ApplicationController
     @statuses = Status.all
     render json: { data: @statuses }, status: :ok
   end
+
+  def destroy
+    @status = Status.find(params[:id])
+    @status.destroy
+    render json: { message: 'Status deleted' }, status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Status not found' }, status: :not_found
+  end
 end
 
