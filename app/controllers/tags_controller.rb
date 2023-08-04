@@ -12,6 +12,9 @@ class TagsController < ApplicationController
 
         if @tag.save
           # タグが正常に保存された後、その情報をStatusモデルにも保存します。
+          # まず、同じtagIdの既存のStatusレコードを削除します。
+          Status.where(tagId: @tag.tagId).destroy_all
+
           @status = Status.new(tag_param.permit(:tagId, :stepNo, :boothId, :operator, :content).merge(created_at: @tag.created_at))
           unless @status.save
             render json: { error: 'Failed to create status' }, status: :unprocessable_entity
